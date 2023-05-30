@@ -1,19 +1,30 @@
 import Pagina from '@/components/Pagina'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { FiArrowLeftCircle, FiSave } from 'react-icons/fi'
 
 const form = () => {
 
-  const { register, handleSubmit } = useForm()
-  const { push } = useRouter()
+  const { register, handleSubmit, setValue } = useForm()
+  const { push, query } = useRouter()
+
+  useEffect(() => {
+    if (query.idCurso) {
+      const cursos = JSON.parse(window.localStorage.getItem('cursos'))
+      const curso = cursos[query.idCurso]
+
+      for(let atributo in curso) {
+        setValue(atributo, curso[atributo])
+      }
+    }
+  }, [query.idCurso])
 
   function salvar(dados) {
     const cursos = JSON.parse(window.localStorage.getItem('cursos')) || []
-    cursos.push(dados)
+    cursos.splice(query.idCurso, 1, dados)
     window.localStorage.setItem('cursos', JSON.stringify(cursos))
     push('/cursos')
   }
@@ -38,11 +49,11 @@ const form = () => {
 
         <div className='text-center'>
           <Link className='btn btn-primary p-2 px-4' href={'/cursos'}>
-            <FiArrowLeftCircle className='me-2 mb-1'/>
+            <FiArrowLeftCircle className='me-2 mb-1' />
             Voltar
           </Link>
           <Button className='p-2 px-4 ms-2 align-items-center' variant='success' onClick={handleSubmit(salvar)}>
-            <FiSave className='me-2 mb-1'/>
+            <FiSave className='me-2 mb-1' />
             Salvar
           </Button>
         </div>
