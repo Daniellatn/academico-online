@@ -13,42 +13,42 @@ const form = () => {
   const { push, query } = useRouter()
 
   useEffect(() => {
-    if (query.idCurso) {
-      axios.get('/api/cursos/' + query.idCurso).then(resultado => {
-        const curso = resultado.data
-        
-        for(let atributo in curso) {
-          setValue(atributo, curso[atributo])
+    if(query.idSala) {
+      axios.get('/api/salas/' + query.idSala).then(resultado => {
+        const sala = resultado.data
+
+        for(let atributo in sala) {
+          setValue(atributo, sala[atributo])
         }
       })
     }
-  }, [query.idCurso])
+  }, [query.idSala])
 
   function salvar(dados) {
-    axios.put('/api/cursos/' + dados.id, dados)
-    push('/cursos')
+    axios.put('/api/salas/' + dados.id, dados)
+    push('/salas')
   }
 
   return (
-    <Pagina titulo="Curso">
+    <Pagina titulo="Salas">
       <Form className='my-3'>
         <Form.Group className="mb-3" controlId="nome">
           <Form.Label>Nome</Form.Label>
           <Form.Control type="text" {...register('nome')} />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="duracao">
-          <Form.Label>Duração</Form.Label>
-          <Form.Control type="text" {...register('duracao')} />
+        <Form.Group className="mb-3" controlId="capacidade">
+          <Form.Label>Capacidade</Form.Label>
+          <Form.Control type="text" {...register('capacidade')} />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="modalidade">
-          <Form.Label>Modalidade</Form.Label>
-          <Form.Control type="text" {...register('modalidade')} />
+        <Form.Group className="mb-3" controlId="tipo">
+          <Form.Label>Tipo</Form.Label>
+          <Form.Control type="text" {...register('tipo')} />
         </Form.Group>
 
         <div className='text-center'>
-          <Link className='btn btn-primary p-2 px-4' href={'/cursos'}>
+          <Link className='btn btn-primary p-2 px-4' href={'/salas'}>
             <FiArrowLeftCircle className='me-2 mb-1' />
             Voltar
           </Link>

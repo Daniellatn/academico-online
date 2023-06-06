@@ -13,39 +13,40 @@ const form = () => {
   const { push } = useRouter()
 
   function salvar(dados) {
-    axios.post('/api/cursos', dados)
-    push('/cursos')
+    axios.post('/api/semestres', dados)
+    push('/semestres')
   }
 
   return (
-    <Pagina titulo="Cadastro de curso">
+    <Pagina titulo="Cadastro de semestres">
       <Form className='my-3'>
         <Form.Group className="mb-3" controlId="nome">
           <Form.Label>Nome</Form.Label>
           <Form.Control type="text" {...register('nome')} />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="duracao">
-          <Form.Label>Duração</Form.Label>
-          <Form.Control type="text" {...register('duracao')} />
+        <Form.Group className="mb-3" controlId="dataInicio">
+          <Form.Label>Data Inicio</Form.Label>
+          <Form.Control type="text" {...register('dataInicio')} />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="modalidade">
-          <Form.Label>Modalidade</Form.Label>
-          <Form.Control type="text" {...register('modalidade')} />
+        <Form.Group className="mb-3" controlId="dataFim">
+          <Form.Label>Data Fim</Form.Label>
+          <Form.Control type="text" {...register('dataFim')} />
         </Form.Group>
 
         <div className='text-center'>
-          <Link className='btn btn-primary p-2 px-4' href={'/cursos'}>
-            <FiArrowLeftCircle className='me-2 mb-1'/>
+          <Link className='btn btn-primary p-2 px-4' href={'/semestres'}>
+            <FiArrowLeftCircle className='me-2 mb-1' />
             Voltar
           </Link>
           <Button className='p-2 px-4 ms-2 align-items-center' variant='success' onClick={handleSubmit(salvar)}>
-            <FiSave className='me-2 mb-1'/>
+            <FiSave className='me-2 mb-1' />
             Salvar
           </Button>
         </div>
       </Form>
+
     </Pagina>
   )
 }

@@ -1,5 +1,5 @@
 import { initializeApp, getApp } from "firebase/app";
-import { getDatabase, set, ref } from "firebase/database";
+import { getDatabase } from "firebase/database";
 
 let app
 
@@ -21,4 +21,4 @@ try {
 
 const dataBase = getDatabase(app)
 
-export { dataBase, set, ref }
+export { dataBase }

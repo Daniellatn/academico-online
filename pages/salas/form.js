@@ -13,30 +13,30 @@ const form = () => {
   const { push } = useRouter()
 
   function salvar(dados) {
-    axios.post('/api/cursos', dados)
-    push('/cursos')
+    axios.post('/api/salas', dados)
+    push('/salas')
   }
-
+  
   return (
-    <Pagina titulo="Cadastro de curso">
+    <Pagina titulo="Cadastro de salas">
       <Form className='my-3'>
         <Form.Group className="mb-3" controlId="nome">
           <Form.Label>Nome</Form.Label>
           <Form.Control type="text" {...register('nome')} />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="duracao">
-          <Form.Label>Duração</Form.Label>
-          <Form.Control type="text" {...register('duracao')} />
+        <Form.Group className="mb-3" controlId="capacidade">
+          <Form.Label>Capacidade</Form.Label>
+          <Form.Control type="text" {...register('capacidade')} />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="modalidade">
-          <Form.Label>Modalidade</Form.Label>
-          <Form.Control type="text" {...register('modalidade')} />
+        <Form.Group className="mb-3" controlId="tipo">
+          <Form.Label>Tipo</Form.Label>
+          <Form.Control type="text" {...register('tipo')} />
         </Form.Group>
 
         <div className='text-center'>
-          <Link className='btn btn-primary p-2 px-4' href={'/cursos'}>
+          <Link className='btn btn-primary p-2 px-4' href={'/salas'}>
             <FiArrowLeftCircle className='me-2 mb-1'/>
             Voltar
           </Link>
@@ -46,6 +46,7 @@ const form = () => {
           </Button>
         </div>
       </Form>
+
     </Pagina>
   )
 }

@@ -13,42 +13,37 @@ const form = () => {
   const { push, query } = useRouter()
 
   useEffect(() => {
-    if (query.idCurso) {
-      axios.get('/api/cursos/' + query.idCurso).then(resultado => {
-        const curso = resultado.data
+    if (query.idDisciplina) {
+      axios.get('/api/disciplinas/' + query.idDisciplina).then(resultado => {
+        const disciplina = resultado.data
         
-        for(let atributo in curso) {
-          setValue(atributo, curso[atributo])
+        for(let atributo in disciplina) {
+          setValue(atributo, disciplina[atributo])
         }
       })
     }
-  }, [query.idCurso])
+  }, [query.idDisciplina])
 
   function salvar(dados) {
-    axios.put('/api/cursos/' + dados.id, dados)
-    push('/cursos')
+    axios.put('/api/disciplinas/' + dados.id, dados)
+    push('/disciplinas')
   }
 
   return (
-    <Pagina titulo="Curso">
+    <Pagina titulo="Disciplinas">
       <Form className='my-3'>
         <Form.Group className="mb-3" controlId="nome">
           <Form.Label>Nome</Form.Label>
           <Form.Control type="text" {...register('nome')} />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="duracao">
-          <Form.Label>Duração</Form.Label>
-          <Form.Control type="text" {...register('duracao')} />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="modalidade">
-          <Form.Label>Modalidade</Form.Label>
-          <Form.Control type="text" {...register('modalidade')} />
+        <Form.Group className="mb-3" controlId="curso">
+          <Form.Label>Curso</Form.Label>
+          <Form.Control type="text" {...register('curso')} />
         </Form.Group>
 
         <div className='text-center'>
-          <Link className='btn btn-primary p-2 px-4' href={'/cursos'}>
+          <Link className='btn btn-primary p-2 px-4' href={'/disciplinas'}>
             <FiArrowLeftCircle className='me-2 mb-1' />
             Voltar
           </Link>
