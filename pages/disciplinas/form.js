@@ -40,7 +40,12 @@ const form = () => {
 
         <Form.Group className="mb-3" controlId="curso">
           <Form.Label>Curso</Form.Label>
-          <Form.Control type="text" {...register('curso')} />
+          <Form.Select id="selectCurso" {...register('curso')}>
+            <option>Selecione</option>
+            {cursos.map((item) => (
+              <option>{item.nome}</option>
+            ))}
+          </Form.Select>
         </Form.Group>
 
         <div className='text-center'>

@@ -9,7 +9,7 @@ import { FiArrowLeftCircle, FiSave } from 'react-icons/fi'
 
 const form = () => {
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: {errors} } = useForm()
   const { push } = useRouter()
 
   function salvar(dados) {
@@ -17,12 +17,28 @@ const form = () => {
     push('/cursos')
   }
 
+  const validatorNome = {
+    required: 'O campo é obrigatório',
+    minLength: {
+      value: 3,
+      message: 'A quantidade de caracteres minima é 3'
+    },
+    maxLength: {
+      value: 10,
+      message: 'A quantidade de caracteres máxima é 10'
+    } 
+  }
+
   return (
     <Pagina titulo="Cadastro de curso">
       <Form className='my-3'>
         <Form.Group className="mb-3" controlId="nome">
           <Form.Label>Nome</Form.Label>
-          <Form.Control type="text" {...register('nome')} />
+          <Form.Control type="text" {...register('nome', validatorNome)} />
+          {
+            errors.nome &&
+            <small className='text-danger'>{errors.nome.message}</small>
+          }
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="duracao">
