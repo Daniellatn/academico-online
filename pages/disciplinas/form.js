@@ -1,15 +1,16 @@
 import Pagina from '@/components/Pagina'
+import disciplinaValidator from '@/validators/disciplinaValidator'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { Button, Form, InputGroup } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { FiArrowLeftCircle, FiSave } from 'react-icons/fi'
 
 const form = () => {
 
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, formState: { errors } } = useForm()
   const { push } = useRouter()
 
   const [cursos, setCursos] = useState([])
@@ -19,10 +20,10 @@ const form = () => {
   }, [])
 
   function getCursos() {
-    axios.get('/api/cursos').then(resultado => {
-      console.log(resultado.data)
+    axios.get('/api/cursos').then(resultado => {  
       setCursos(resultado.data)
     })
+    console.log(errors)
   }
 
   function salvar(dados) {
@@ -35,7 +36,11 @@ const form = () => {
       <Form className='my-3'>
         <Form.Group className="mb-3" controlId="nome">
           <Form.Label>Nome</Form.Label>
-          <Form.Control type="text" {...register('nome')} />
+          <Form.Control type="text" {...register('nome', disciplinaValidator.nome)} />
+          {
+            errors.nome &&
+            <small className='text-danger'>{errors.nome.message}</small>
+          }
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="curso">
@@ -43,7 +48,7 @@ const form = () => {
           <Form.Select id="selectCurso" {...register('curso')}>
             <option>Selecione</option>
             {cursos.map((item) => (
-              <option>{item.nome}</option>
+              <option key={item.id}>{item.nome}</option>
             ))}
           </Form.Select>
         </Form.Group>
