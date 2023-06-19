@@ -7,15 +7,24 @@ import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { FiArrowLeftCircle, FiSave } from 'react-icons/fi'
+import { mask } from 'remask'
 
 const form = () => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm()
   const { push } = useRouter()
 
   function salvar(dados) {
     axios.post('/api/alunos', dados)
     push('/alunos')
+  }
+
+  function handleChange(event) {
+    const name = event.target.name
+    const value = event.target.value
+    const mascara = event.target.getAttribute('mask')
+
+    setValue(name, mask(value, mascara))
   }
 
   return (
@@ -32,7 +41,7 @@ const form = () => {
 
         <Form.Group className="mb-3" controlId="cpf">
           <Form.Label>CPF</Form.Label>
-          <Form.Control type="text" {...register('cpf', alunoValidator.cpf)} />
+          <Form.Control type="text" mask='999.999.999-99' {...register('cpf', alunoValidator.cpf)} onChange={handleChange}/>
           {
             errors.cpf &&
             <small className='text-danger'>{errors.cpf.message}</small>
@@ -59,7 +68,7 @@ const form = () => {
 
         <Form.Group className="mb-3" controlId="telefone">
           <Form.Label>Telefone</Form.Label>
-          <Form.Control type="text" {...register('telefone', alunoValidator.telefone)} />
+          <Form.Control type="text" mask='(99) 99999-9999' {...register('telefone', alunoValidator.telefone)} onChange={handleChange}/>
           {
             errors.telefone &&
             <small className='text-danger'>{errors.telefone.message}</small>
@@ -68,7 +77,7 @@ const form = () => {
 
         <Form.Group className="mb-3" controlId="cep">
           <Form.Label>CEP</Form.Label>
-          <Form.Control type="text" {...register('cep', alunoValidator.cep)} />
+          <Form.Control type="text" mask='99.999-999' {...register('cep', alunoValidator.cep)} onChange={handleChange} />
           {
             errors.cep &&
             <small className='text-danger'>{errors.cep.message}</small>
@@ -108,16 +117,16 @@ const form = () => {
           {
             errors.bairro &&
             <small className='text-danger'>{errors.bairro.message}</small>
-          }  
+          }
         </Form.Group>
 
         <div className='text-center'>
           <Link className='btn btn-primary p-2 px-4' href={'/disciplinas'}>
-            <FiArrowLeftCircle className='me-2 mb-1'/>
+            <FiArrowLeftCircle className='me-2 mb-1' />
             Voltar
           </Link>
           <Button className='p-2 px-4 ms-2 align-items-center' variant='success' onClick={handleSubmit(salvar)}>
-            <FiSave className='me-2 mb-1'/>
+            <FiSave className='me-2 mb-1' />
             Salvar
           </Button>
         </div>

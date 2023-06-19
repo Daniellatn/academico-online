@@ -45,12 +45,16 @@ const form = () => {
 
         <Form.Group className="mb-3" controlId="curso">
           <Form.Label>Curso</Form.Label>
-          <Form.Select id="selectCurso" {...register('curso')}>
-            <option>Selecione</option>
+          <Form.Select id="selectCurso" {...register('curso', disciplinaValidator.curso)}>
+            <option value=''>Selecione</option>
             {cursos.map((item) => (
-              <option key={item.id}>{item.nome}</option>
+              <option key={item.id} value={item.nome}>{item.nome}</option>
             ))}
           </Form.Select>
+          {
+            errors.curso &&
+            <small className='text-danger'>{errors.curso.message}</small>
+          }
         </Form.Group>
 
         <div className='text-center'>
