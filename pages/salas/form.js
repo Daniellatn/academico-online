@@ -7,15 +7,24 @@ import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { FiArrowLeftCircle, FiSave } from 'react-icons/fi'
+import { mask } from 'remask'
 
 const form = () => {
 
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm()
   const { push } = useRouter()
 
   function salvar(dados) {
     axios.post('/api/salas', dados)
     push('/salas')
+  }
+
+  function handleChange(event) {
+    const name = event.target.name
+    const value = event.target.value
+    const mascara = event.target.getAttribute('mask')
+
+    setValue(name, mask(value, mascara))
   }
   
   return (
@@ -32,7 +41,7 @@ const form = () => {
 
         <Form.Group className="mb-3" controlId="capacidade">
           <Form.Label>Capacidade</Form.Label>
-          <Form.Control type="text" {...register('capacidade', salaValidator.capacidade)} />
+          <Form.Control type="text" mask='999' {...register('capacidade', salaValidator.capacidade)} onChange={handleChange} />
           {
             errors.capacidade &&
             <small className='text-danger'>{errors.capacidade.message}</small>
